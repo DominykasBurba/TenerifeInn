@@ -1,0 +1,11 @@
+.footer {
+    min-height: 4rem;
+    width: 100%;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 1rem;
+    color: black;
+}
