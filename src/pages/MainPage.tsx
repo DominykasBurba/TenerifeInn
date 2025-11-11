@@ -2,7 +2,7 @@ import '../styles/MainPage.css'
 import '../styles/contact-info.css'
 import '../styles/room-info.css'
 import '../components/Header.tsx'
-import '../styles/bedroom.css'
+import '../styles/bedroom-grid.css'
 import Header from '../components/Header.tsx'
 import { GoPeople } from "react-icons/go";
 import { MdOutlineBedroomParent } from "react-icons/md";
@@ -24,18 +24,16 @@ import { BiTv } from "react-icons/bi";
 import { GiCookingPot } from "react-icons/gi";
 import { GiKing } from "react-icons/gi";
 import { GiCampingTent } from "react-icons/gi";
+import { IoClose } from "react-icons/io5";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import Footer from '../components/Footer.tsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 function App() {
   const [openCategory, setOpenCategory] = useState(0);
-  const [activePhotos, setActivePhotos] = useState({
-    bedroom1: 0,
-    bedroom2: 0,
-    bedroom3: 0,
-    bedroom4: 0
-  });
+  const [modalOpen, setModalOpen] = useState<number | null>(null);
+  const [modalPhotoIndex, setModalPhotoIndex] = useState(0);
 
   const toggleCategory = (index: number) => {
     if (openCategory === index) {
@@ -45,12 +43,75 @@ function App() {
     }
   };
 
-  const switchPhoto = (bedroom: string, photoIndex: number) => {
-    setActivePhotos(prev => ({
-      ...prev,
-      [bedroom]: photoIndex
-    }));
+  const openModal = (bedroomIndex: number) => {
+    setModalOpen(bedroomIndex);
+    setModalPhotoIndex(0);
   };
+
+  const closeModal = () => {
+    setModalOpen(null);
+    setModalPhotoIndex(0);
+  };
+
+  const nextPhoto = (_bedroomIndex: number, totalPhotos: number) => {
+    setModalPhotoIndex((prev) => (prev + 1) % totalPhotos);
+  };
+
+  const prevPhoto = (_bedroomIndex: number, totalPhotos: number) => {
+    setModalPhotoIndex((prev) => (prev - 1 + totalPhotos) % totalPhotos);
+  };
+
+  // Define bedroom gallery data
+  const bedroomGalleries = [
+    {
+      title: "Bedroom 1",
+      description: "King-size bed",
+      photos: ['/FirstBedroom/First.jpg', '/FirstBedroom/First2.jpg', '/FirstBedroom/First3.jpg', '/FirstBedroom/First4.jpg', '/FirstBedroom/First5.jpg']
+    },
+    {
+      title: "Bedroom 2",
+      description: "King-size bed",
+      photos: ['/SecondBedroom/Second.jpg', '/SecondBedroom/Second2.jpg', '/SecondBedroom/Second3.jpg', '/SecondBedroom/Second4.jpg', '/SecondBedroom/Second5.jpg']
+    },
+    {
+      title: "Bedroom 3",
+      description: "King-size bed",
+      photos: ['/ThirdBedroom/Third.jpg', '/ThirdBedroom/Third2.jpg', '/ThirdBedroom/Third3.jpg', '/ThirdBedroom/Third4.jpg']
+    },
+    {
+      title: "Bedroom 4",
+      description: "Small Double bed",
+      photos: ['/FourthBedroom/Fourth.jpg', '/FourthBedroom/Fourth2.jpg', '/FourthBedroom/Fourth3.jpg']
+    }
+  ];
+
+  // Keyboard navigation for modal and prevent body scroll
+  useEffect(() => {
+    if (modalOpen === null) {
+      document.body.style.overflow = '';
+      return;
+    }
+
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalOpen(null);
+        setModalPhotoIndex(0);
+      } else if (e.key === 'ArrowRight') {
+        setModalPhotoIndex((prev) => (prev + 1) % bedroomGalleries[modalOpen].photos.length);
+      } else if (e.key === 'ArrowLeft') {
+        setModalPhotoIndex((prev) => (prev - 1 + bedroomGalleries[modalOpen].photos.length) % bedroomGalleries[modalOpen].photos.length);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [modalOpen]);
 
   return (
     <>
@@ -89,131 +150,75 @@ function App() {
         </div>
       </section>
 
-      <section className='bedroom-showcase' id='bedroom-showcase'>
-        <div className='bedroom-showcase-container'>
-          <h2>Our Bedrooms</h2>
-          
-          <div className='bedroom-item'>
-            <div className='bedroom-gallery'>
-              <div className={`bedroom-main-image ${activePhotos.bedroom1 === 0 ? 'bedroom-photo-1' : activePhotos.bedroom1 === 1 ? 'bedroom-photo-2' : 'bedroom-photo-3'}`}></div>
-              <div className='bedroom-thumbnails'>
+      <section className='bedroom-grid' id='bedroom-grid'>
+        <div className='bedroom-grid-container'>
+          <h2>Where you'll sleep</h2>
+          <div className='bedroom-grid-wrapper'>
+            {bedroomGalleries.map((bedroom, index) => (
+              <div 
+                key={index} 
+                className='bedroom-grid-item'
+                onClick={() => openModal(index)}
+              >
                 <div 
-                  className={`bedroom-thumbnail bedroom-photo-1 ${activePhotos.bedroom1 === 0 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom1', 0)}
+                  className='bedroom-grid-photo'
+                  style={{ backgroundImage: `url(${bedroom.photos[0]})` }}
                 ></div>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-2 ${activePhotos.bedroom1 === 1 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom1', 1)}
-                ></div>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-3 ${activePhotos.bedroom1 === 2 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom1', 2)}
-                ></div>
-              </div>
+                <div className='bedroom-grid-info'>
+                  <h3>{bedroom.title}</h3>
+                  <p>{bedroom.description}</p>
             </div>
-            <div className='bedroom-content'>
-              <h3>Master Bedroom</h3>
-              <p>Experience luxury in our spacious master bedroom with stunning lake views, a private balcony, and an en-suite bathroom. Features a king-size bed and elegant furnishings.</p>
-              <div className='bedroom-features'>
-                <span className='bedroom-feature'>King Size Bed</span>
-                <span className='bedroom-feature'>Lake View</span>
-                <span className='bedroom-feature'>Private Balcony</span>
-                <span className='bedroom-feature'>En-suite Bathroom</span>
               </div>
+            ))}
             </div>
           </div>
+      </section>
 
-          <div className='bedroom-item'>
-            <div className='bedroom-gallery'>
-              <div className={`bedroom-main-image ${activePhotos.bedroom2 === 0 ? 'bedroom-photo-4' : activePhotos.bedroom2 === 1 ? 'bedroom-photo-5' : 'bedroom-photo-6'}`}></div>
-              <div className='bedroom-thumbnails'>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-4 ${activePhotos.bedroom2 === 0 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom2', 0)}
-                ></div>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-5 ${activePhotos.bedroom2 === 1 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom2', 1)}
-                ></div>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-6 ${activePhotos.bedroom2 === 2 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom2', 2)}
-                ></div>
-              </div>
+      {modalOpen !== null && (
+        <div className='bedroom-modal-overlay' onClick={closeModal}>
+          <div className='bedroom-modal-content' onClick={(e) => e.stopPropagation()}>
+            <button className='bedroom-modal-close' onClick={closeModal}>
+              <IoClose />
+            </button>
+            <button 
+              className='bedroom-modal-nav bedroom-modal-prev'
+              onClick={() => prevPhoto(modalOpen, bedroomGalleries[modalOpen].photos.length)}
+            >
+              <IoChevronBack />
+            </button>
+            <div className='bedroom-modal-image-container'>
+              <img 
+                src={bedroomGalleries[modalOpen].photos[modalPhotoIndex]} 
+                alt={bedroomGalleries[modalOpen].title}
+                className='bedroom-modal-image'
+              />
             </div>
-            <div className='bedroom-content'>
-              <h3>Guest Bedroom</h3>
-              <p>Relax in our cozy guest bedroom featuring comfortable furnishings, a serene ambiance, and easy access to the villa's amenities. Perfect for couples or families.</p>
-              <div className='bedroom-features'>
-                <span className='bedroom-feature'>Queen Size Bed</span>
-                <span className='bedroom-feature'>Garden View</span>
-                <span className='bedroom-feature'>Modern Amenities</span>
-                <span className='bedroom-feature'>Family Friendly</span>
+            <button 
+              className='bedroom-modal-nav bedroom-modal-next'
+              onClick={() => nextPhoto(modalOpen, bedroomGalleries[modalOpen].photos.length)}
+            >
+              <IoChevronForward />
+            </button>
+            <div className='bedroom-modal-info'>
+              <h3>{bedroomGalleries[modalOpen].title}</h3>
+              <p>{bedroomGalleries[modalOpen].description}</p>
+              <div className='bedroom-modal-thumbnails'>
+                {bedroomGalleries[modalOpen].photos.map((photo, photoIndex) => (
+                  <div
+                    key={photoIndex}
+                    className={`bedroom-modal-thumbnail ${modalPhotoIndex === photoIndex ? 'active' : ''}`}
+                    onClick={() => setModalPhotoIndex(photoIndex)}
+                    style={{ backgroundImage: `url(${photo})` }}
+                ></div>
+                ))}
               </div>
-            </div>
-          </div>
-
-          <div className='bedroom-item'>
-            <div className='bedroom-gallery'>
-              <div className={`bedroom-main-image ${activePhotos.bedroom3 === 0 ? 'bedroom-photo-7' : activePhotos.bedroom3 === 1 ? 'bedroom-photo-8' : 'bedroom-photo-9'}`}></div>
-              <div className='bedroom-thumbnails'>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-7 ${activePhotos.bedroom3 === 0 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom3', 0)}
-                ></div>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-8 ${activePhotos.bedroom3 === 1 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom3', 1)}
-                ></div>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-9 ${activePhotos.bedroom3 === 2 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom3', 2)}
-                ></div>
-              </div>
-            </div>
-            <div className='bedroom-content'>
-              <h3>Family Bedroom</h3>
-              <p>Ideal for families with children, this bedroom offers twin beds and plenty of space for relaxation. Features beautiful garden views and modern amenities.</p>
-              <div className='bedroom-features'>
-                <span className='bedroom-feature'>Twin Beds</span>
-                <span className='bedroom-feature'>Spacious</span>
-                <span className='bedroom-feature'>Child Safe</span>
-                <span className='bedroom-feature'>Garden View</span>
-              </div>
-            </div>
-          </div>
-
-          <div className='bedroom-item'>
-            <div className='bedroom-gallery'>
-              <div className={`bedroom-main-image ${activePhotos.bedroom4 === 0 ? 'bedroom-photo-10' : activePhotos.bedroom4 === 1 ? 'bedroom-photo-11' : 'bedroom-photo-12'}`}></div>
-              <div className='bedroom-thumbnails'>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-10 ${activePhotos.bedroom4 === 0 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom4', 0)}
-                ></div>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-11 ${activePhotos.bedroom4 === 1 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom4', 1)}
-                ></div>
-                <div 
-                  className={`bedroom-thumbnail bedroom-photo-12 ${activePhotos.bedroom4 === 2 ? 'active' : ''}`}
-                  onClick={() => switchPhoto('bedroom4', 2)}
-                ></div>
-              </div>
-            </div>
-            <div className='bedroom-content'>
-              <h3>Deluxe Suite</h3>
-              <p>Our premium suite offers the ultimate in comfort and style. Features a queen-size bed, private sitting area, and panoramic views of the surrounding landscape.</p>
-              <div className='bedroom-features'>
-                <span className='bedroom-feature'>Queen Size Bed</span>
-                <span className='bedroom-feature'>Sitting Area</span>
-                <span className='bedroom-feature'>Panoramic Views</span>
-                <span className='bedroom-feature'>Premium Amenities</span>
+              <div className='bedroom-modal-counter'>
+                {modalPhotoIndex + 1} / {bedroomGalleries[modalOpen].photos.length}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      )}
 
       <section className='room-info' id='room-info'>
         <div className='room-info-container'>
@@ -224,7 +229,7 @@ function App() {
               <div className='room-features'>
                 <h3>The Main Rooms</h3>
                 <h2>All room features</h2>
-                
+
                 <div className='feature-category'>
                   <div className='category-header' onClick={() => toggleCategory(0)}>
                     <h4>Bath & Personal Care</h4>
@@ -319,7 +324,7 @@ function App() {
           <div className='info-wrapper'>
             <div className='basic-info'>
               <h1>Los OLivos Villa</h1>
-              <p>Los QLivos Villa is nestled in the forest and is bright, spacious, and has a warm atmosphere. The large windows offer breathtaking lake views from every point of the villa.</p>
+              <p>We want your stay at Villa Los Olivos to be effortless, relaxing, and filled with good memories. Every corner of Villa Los Olivos was designed with care by your host, Andre. We simply ask you to enjoy it with the same attention and love with which it was created.</p>
             </div>
             <div className='mini-contact-info'>
               <h1>Our contact</h1>
@@ -331,8 +336,8 @@ function App() {
             <div className='mini-rules-info'>
               <h1>House rules</h1>
               <ul className="amenities-new">
-                  <li><LuClock2 /> Check-in: 3:00 PM</li>
-                  <li><LuClock2 /> Check-out: 11:00 AM</li>
+                  <li><LuClock2 /> Check-in: 16:00-22:00</li>
+                  <li><LuClock2 /> Check-out: before 11:00</li>
               </ul>
             </div>
           </div>
@@ -342,9 +347,9 @@ function App() {
             <div className='details-info-third'>
               <ul>
                 <li>
-                  <a 
-                    href="https://facebook.com/burbadominykas" 
-                    target="_blank" 
+                  <a
+                    href="https://facebook.com/burbadominykas"
+                    target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: 'inherit', textDecoration: 'none' }}
                   >
@@ -352,9 +357,9 @@ function App() {
                   </a>
                 </li>
                 <li>
-                  <a 
-                    href="https://www.instagram.com/dominykas_burba/" 
-                    target="_blank" 
+                  <a
+                    href="https://www.instagram.com/dominykas_burba/"
+                    target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: 'inherit', textDecoration: 'none' }}
                   >

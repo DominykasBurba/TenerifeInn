@@ -1,0 +1,399 @@
+/* Bedroom Grid Section */
+.bedroom-grid {
+  min-height: 40rem;
+  width: 100%;
+  padding: 3rem 0;
+  background-color: #f8f9fa;
+}
+
+.bedroom-grid-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.bedroom-grid h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #2c3e50;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.bedroom-grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.bedroom-grid-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bedroom-grid-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.bedroom-grid-photo {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.4s ease;
+}
+
+.bedroom-grid-item:hover .bedroom-grid-photo {
+  transform: scale(1.05);
+}
+
+.bedroom-grid-info {
+  padding: 1.5rem;
+  background: white;
+}
+
+.bedroom-grid-info h3 {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.bedroom-grid-info p {
+  color: #5a6c7d;
+  font-size: 0.95rem;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Modal Styles */
+.bedroom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.bedroom-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bedroom-modal-close {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 2.5rem;
+  cursor: pointer;
+  z-index: 1001;
+  transition: transform 0.2s ease;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bedroom-modal-close:hover {
+  transform: scale(1.1);
+}
+
+.bedroom-modal-image-container {
+  width: 100%;
+  max-width: 1200px;
+  max-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+.bedroom-modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 70vh;
+  transition: opacity 0.3s ease;
+}
+
+.bedroom-modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1002;
+  backdrop-filter: blur(10px);
+}
+
+.bedroom-modal-nav:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.bedroom-modal-prev {
+  left: 20px;
+}
+
+.bedroom-modal-next {
+  right: 20px;
+}
+
+.bedroom-modal-info {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 1rem;
+}
+
+.bedroom-modal-info h3 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.bedroom-modal-info p {
+  color: #5a6c7d;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.bedroom-modal-thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.bedroom-modal-thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.bedroom-modal-thumbnail:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  border-color: #2c3e50;
+}
+
+.bedroom-modal-thumbnail.active {
+  opacity: 1;
+  border-color: #2c3e50;
+  transform: scale(1.05);
+}
+
+.bedroom-modal-counter {
+  text-align: center;
+  color: #5a6c7d;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .bedroom-grid-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .bedroom-grid-photo {
+    height: 250px;
+  }
+
+  .bedroom-modal-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .bedroom-modal-prev {
+    left: 10px;
+  }
+
+  .bedroom-modal-next {
+    right: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bedroom-grid {
+    padding: 2rem 0;
+  }
+
+  .bedroom-grid h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .bedroom-grid-wrapper {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .bedroom-grid-photo {
+    height: 220px;
+  }
+
+  .bedroom-modal-content {
+    max-width: 95vw;
+  }
+
+  .bedroom-modal-image-container {
+    max-height: 60vh;
+  }
+
+  .bedroom-modal-close {
+    top: -40px;
+    font-size: 2rem;
+  }
+
+  .bedroom-modal-nav {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .bedroom-modal-thumbnails {
+    gap: 0.5rem;
+  }
+
+  .bedroom-modal-thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+
+  .bedroom-modal-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .bedroom-modal-info p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bedroom-grid-container {
+    padding: 0 1rem;
+  }
+
+  .bedroom-grid h2 {
+    font-size: 1.5rem;
+  }
+
+  .bedroom-grid-photo {
+    height: 200px;
+  }
+
+  .bedroom-grid-info {
+    padding: 1rem;
+  }
+
+  .bedroom-grid-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .bedroom-modal-close {
+    top: -35px;
+    font-size: 1.8rem;
+  }
+
+  .bedroom-modal-nav {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+
+  .bedroom-modal-prev {
+    left: 5px;
+  }
+
+  .bedroom-modal-next {
+    right: 5px;
+  }
+
+  .bedroom-modal-thumbnails {
+    gap: 0.4rem;
+  }
+
+  .bedroom-modal-thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+
+  .bedroom-modal-info {
+    padding: 1rem;
+  }
+}
+
