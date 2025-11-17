@@ -1,39 +1,30 @@
-import '../styles/MainPage.css'
+﻿import '../styles/MainPage.css'
 import '../styles/contact-info.css'
 import '../styles/room-info.css'
 import '../components/Header.tsx'
 import '../styles/bedroom-grid.css'
+import '../styles/gallery.css'
+import '../styles/main-wrapper.css'
 import Header from '../components/Header.tsx'
-import { GoPeople } from "react-icons/go";
-import { MdOutlineBedroomParent } from "react-icons/md";
-import { MdOutlineWaterDrop } from "react-icons/md";
-import { FiPhone } from "react-icons/fi";
-import { MdOutlineEmail } from "react-icons/md";
-import { LuClock2 } from "react-icons/lu";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { GiLeak } from "react-icons/gi";
-import { BiRestaurant } from "react-icons/bi";
-import { BsDisplay } from "react-icons/bs";
-import { GiBathtub } from "react-icons/gi";
-import { GiWaves } from "react-icons/gi";
-import { FaWifi } from "react-icons/fa";
-import { FaCar } from "react-icons/fa";
-import { GiSun } from "react-icons/gi";
-import { BiTv } from "react-icons/bi";
-import { GiCookingPot } from "react-icons/gi";
-import { GiKing } from "react-icons/gi";
-import { GiCampingTent } from "react-icons/gi";
-import { IoClose } from "react-icons/io5";
-import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import Footer from '../components/Footer.tsx';
 import { useState, useEffect } from 'react';
+import { GoPeople } from "react-icons/go";
+import { FiPhone } from "react-icons/fi";
+import { LuClock2 } from "react-icons/lu";
+import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
+import { FaDumbbell, FaBook, FaBluetooth, FaSink, FaCoffee, FaPumpSoap, FaWind, FaFacebook, FaSoap, FaInstagram, FaBath, FaShower, FaTshirt, FaBed, FaWineGlass, FaUtensils, FaWifi, FaSwimmingPool, FaMountain, FaUmbrellaBeach, FaLock, FaCouch } from 'react-icons/fa';
+import { GiClothesline, GiHanger, GiWashingMachine, GiCookingPot, GiBarbecue, GiClothes } from 'react-icons/gi';
+import { MdOutlineKitchen , MdOutlineBlender, MdMicrowave, MdCurtains, MdOutlineBedroomParent, MdOutlineWaterDrop, MdOutdoorGrill, MdOutlineBalcony, MdKitchen} from 'react-icons/md';
+import { TbDeviceTv } from 'react-icons/tb';
 
 
 function App() {
   const [openCategory, setOpenCategory] = useState(0);
   const [modalOpen, setModalOpen] = useState<number | null>(null);
   const [modalPhotoIndex, setModalPhotoIndex] = useState(0);
+  const [galleryModalOpen, setGalleryModalOpen] = useState<number | null>(null);
+  const [galleryPhotoIndex, setGalleryPhotoIndex] = useState(0);
+  const [showAllGalleryPhotos, setShowAllGalleryPhotos] = useState(false);
 
   const toggleCategory = (index: number) => {
     if (openCategory === index) {
@@ -61,48 +52,103 @@ function App() {
     setModalPhotoIndex((prev) => (prev - 1 + totalPhotos) % totalPhotos);
   };
 
-  // Define bedroom gallery data
+  const openGalleryModal = (photoIndex: number) => {
+    setGalleryModalOpen(photoIndex);
+    setGalleryPhotoIndex(photoIndex);
+  };
+
+  const closeGalleryModal = () => {
+    setGalleryModalOpen(null);
+    setGalleryPhotoIndex(0);
+  };
+
+  const nextGalleryPhoto = (totalPhotos: number) => {
+    setGalleryPhotoIndex((prev) => (prev + 1) % totalPhotos);
+  };
+
+  const prevGalleryPhoto = (totalPhotos: number) => {
+    setGalleryPhotoIndex((prev) => (prev - 1 + totalPhotos) % totalPhotos);
+  };
+
   const bedroomGalleries = [
     {
       title: "Bedroom 1",
-      description: "King-size bed",
-      photos: ['/FirstBedroom/First.jpg', '/FirstBedroom/First2.jpg', '/FirstBedroom/First3.jpg', '/FirstBedroom/First4.jpg', '/FirstBedroom/First5.jpg']
+      description: "King-size bed • Balcony • Ocean view • Ensuite bathroom",
+      photos: ['/FirstBedroom/First.jpg', '/FirstBedroom/First2.jpg', '/FirstBedroom/First3.jpg', '/FirstBedroom/First4.jpg', '/FirstBedroom/First5.jpg', '/FirstBedroom/First6.jpg', '/FirstBedroom/First7.jpg']
     },
     {
       title: "Bedroom 2",
-      description: "King-size bed",
+      description: "King-size bed • Balcony • Ocean view • Ensuite bathroom",
       photos: ['/SecondBedroom/Second.jpg', '/SecondBedroom/Second2.jpg', '/SecondBedroom/Second3.jpg', '/SecondBedroom/Second4.jpg', '/SecondBedroom/Second5.jpg']
     },
     {
       title: "Bedroom 3",
-      description: "King-size bed",
-      photos: ['/ThirdBedroom/Third.jpg', '/ThirdBedroom/Third2.jpg', '/ThirdBedroom/Third3.jpg', '/ThirdBedroom/Third4.jpg']
+      description: "King-size bed • Terrace • Ocean view • Ensuite bathroom • Pool",
+      photos: ['/ThirdBedroom/Third.jpg', '/ThirdBedroom/Third1.jpg', '/ThirdBedroom/Third2.jpg', '/ThirdBedroom/Third3.jpg', '/ThirdBedroom/Third4.jpg', '/ThirdBedroom/Third5.jpg']
     },
     {
       title: "Bedroom 4",
-      description: "Small Double bed",
-      photos: ['/FourthBedroom/Fourth.jpg', '/FourthBedroom/Fourth2.jpg', '/FourthBedroom/Fourth3.jpg']
+      description: "Small Double bed • Terrace • Garden view • Pool",
+      photos: ['/FourthBedroom/Fourth.jpg', '/FourthBedroom/Fourth2.jpg', '/FourthBedroom/Fourth3.jpg', '/FourthBedroom/Fourth4.jpg', '/FourthBedroom/Fourth5.jpg', '/FourthBedroom/Fourth6.jpg']
     }
   ];
 
-  // Keyboard navigation for modal and prevent body scroll
+  const galleryPhotos = [
+    '/Gallery/IMG_2772-HDR copy (1).jpg',
+    '/Gallery/IMG_2774-HDR copy 2.jpg',
+    '/Gallery/IMG_2776-HDR copy 2 (1).jpg',
+    '/Gallery/IMG_2778-HDR copy.jpg',
+    '/Gallery/IMG_2783-HDR copy.jpg',
+    '/Gallery/IMG_2785-HDR copy.jpg',
+    '/Gallery/IMG_2790-HDR copy.jpg',
+    '/Gallery/IMG_2823 copy.jpg',
+    '/Gallery/IMG_2824 copy.jpg',
+    '/Gallery/IMG_2854-HDR copy.jpg',
+    '/Gallery/IMG_2919-HDR copy.jpg',
+    '/Gallery/IMG_2929-HDR copy.jpg',
+    '/Gallery/IMG_2931-HDR copy.jpg',
+    '/Gallery/IMG_2939-HDR copy (1).jpg',
+    '/Gallery/IMG_2943-HDR copy (1).jpg',
+    '/Gallery/IMG_2952-HDR copy.jpg',
+    '/Gallery/IMG_2955-HDR copy.jpg',
+    '/Gallery/IMG_2959-HDR copy.jpg',
+    '/Gallery/IMG_2964-HDR copy.jpg',
+    '/Gallery/IMG_2966-HDR copy.jpg',
+    '/Gallery/IMG_2970-HDR copy.jpg',
+    '/Gallery/IMG_2973-HDR copy.jpg',
+    '/Gallery/IMG_2984 copy.jpg'
+  ];
+
   useEffect(() => {
-    if (modalOpen === null) {
+    if (modalOpen === null && galleryModalOpen === null) {
       document.body.style.overflow = '';
       return;
     }
 
-    // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setModalOpen(null);
-        setModalPhotoIndex(0);
+        if (modalOpen !== null) {
+          setModalOpen(null);
+          setModalPhotoIndex(0);
+        }
+        if (galleryModalOpen !== null) {
+          setGalleryModalOpen(null);
+          setGalleryPhotoIndex(0);
+        }
       } else if (e.key === 'ArrowRight') {
-        setModalPhotoIndex((prev) => (prev + 1) % bedroomGalleries[modalOpen].photos.length);
+        if (modalOpen !== null) {
+          setModalPhotoIndex((prev) => (prev + 1) % bedroomGalleries[modalOpen].photos.length);
+        } else if (galleryModalOpen !== null) {
+          setGalleryPhotoIndex((prev) => (prev + 1) % galleryPhotos.length);
+        }
       } else if (e.key === 'ArrowLeft') {
-        setModalPhotoIndex((prev) => (prev - 1 + bedroomGalleries[modalOpen].photos.length) % bedroomGalleries[modalOpen].photos.length);
+        if (modalOpen !== null) {
+          setModalPhotoIndex((prev) => (prev - 1 + bedroomGalleries[modalOpen].photos.length) % bedroomGalleries[modalOpen].photos.length);
+        } else if (galleryModalOpen !== null) {
+          setGalleryPhotoIndex((prev) => (prev - 1 + galleryPhotos.length) % galleryPhotos.length);
+        }
       }
     };
 
@@ -111,11 +157,12 @@ function App() {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [modalOpen]);
+  }, [modalOpen, galleryModalOpen]);
 
   return (
     <>
     <Header />
+    <div className='main-page-wrapper'>
       <div className='photo-info'>
         <div className='photo-info-container'>
           <div className='main-photo'></div>
@@ -127,15 +174,15 @@ function App() {
       </div>
       <section className='main-info' id='main-info'>
         <div className='main-info-container'>
-          <h3>About Los Olivos Villa</h3>
-          <h2>Welcome to Los OLivos Villa</h2>
+          <h3>About Villa Los Olivos</h3>
+          <h2>Welcome to Villa Los OLivos</h2>
 
           <div className='main-wrapper'>
             <div className='main-info-photo'></div>
             <div className='main-info-text'>
               <div className='main-info-text-header'>
                 <h1>About</h1>
-                <p>Villa Los Olivos is a brand-new luxury villa located in the authentic town of Adeje – a quiet area where time flows slower and the true spirit of Tenerife can be felt. Here you will discover cozy family-run restaurants offering local wines and traditional dishes, a charming old town with a church, and scenic ravines perfect for nature walks.</p>
+                <p>Villa Los Olivos is a brand-new luxury villa located in the authentic town of Adeje - a quiet area where time flows slower and the true spirit of Tenerife can be felt. Here you will discover cozy family-run restaurants offering local wines and traditional dishes, a charming old town with a church, and scenic ravines perfect for nature walks.</p>
               </div>
               <div className='main-info-text-icons'>
                 <h1>Capacity</h1>
@@ -164,6 +211,9 @@ function App() {
                   className='bedroom-grid-photo'
                   style={{ backgroundImage: `url(${bedroom.photos[0]})` }}
                 ></div>
+                <div className='bedroom-grid-hover-overlay'>
+                  <span>View more</span>
+                </div>
                 <div className='bedroom-grid-info'>
                   <h3>{bedroom.title}</h3>
                   <p>{bedroom.description}</p>
@@ -236,31 +286,31 @@ function App() {
                     <span className={`expand-arrow ${openCategory === 0 ? 'expanded' : ''}`}>▼</span>
                   </div>
                   <ul className={`feature-list ${openCategory === 0 ? '' : 'collapsed'}`}>
-                    <li><GiLeak /> Garden view</li>
-                    <li><BiRestaurant /> Kitchen</li>
-                    <li><BsDisplay /> Dedicated workspace</li>
-                    <li><GiBathtub /> Private hot tub</li>
-                    <li><GiWaves /> Lake view</li>
-                    <li><FaWifi /> Wifi</li>
-                    <li><FaCar /> Free parking on premises</li>
-                    <li><GiSun /> Private sauna</li>
-                    <li><GiBathtub /> Hair dryer</li>
-                    <li><GiLeak /> Shampoo & conditioner</li>
+                    <li><FaBath /> Bathtub</li>
+                    <li><FaWind /> Hair dryer</li>
+                    <li><FaSoap /> Body soap</li>
+                    <li><FaShower /> Outdoor shower</li>
+                    <li><FaShower /> Hot water</li>
+                    <li><FaPumpSoap /> Shower gel</li>
+                    <li><GiHanger /> Towels & essentials</li>
+                    <li><FaLock /> Private entrance bathroom access</li>
                   </ul>
                 </div>
 
                 <div className='feature-category'>
                   <div className='category-header' onClick={() => toggleCategory(1)}>
-                    <h4>Media & Entertainment</h4>
+                    <h4>Bedroom & Laundry</h4>
                     <span className={`expand-arrow ${openCategory === 1 ? 'expanded' : ''}`}>▼</span>
                   </div>
                   <ul className={`feature-list ${openCategory === 1 ? '' : 'collapsed'}`}>
-                    <li><BiTv /> Smart TV</li>
-                    <li><FaWifi /> Netflix & streaming</li>
-                    <li><BiTv /> Bluetooth speakers</li>
-                    <li><FaWifi /> High-speed internet</li>
-                    <li><BiTv /> Gaming console</li>
-                    <li><FaWifi /> Mobile hotspot</li>
+                    <li><GiWashingMachine /> Washer & dryer</li>
+                    <li><FaBed /> Bed linens</li>
+                    <li><FaBed /> Extra pillows & blankets</li>
+                    <li><MdCurtains /> Room-darkening shades</li>
+                    <li><FaTshirt /> Iron & ironing equipment</li>
+                    <li><FaLock /> Safe</li>
+                    <li><GiClothes /> Clothing storage</li>
+                    <li><GiClothesline /> Drying rack</li>
                   </ul>
                 </div>
 
@@ -270,48 +320,48 @@ function App() {
                     <span className={`expand-arrow ${openCategory === 2 ? 'expanded' : ''}`}>▼</span>
                   </div>
                   <ul className={`feature-list ${openCategory === 2 ? '' : 'collapsed'}`}>
-                    <li><GiCookingPot /> Full kitchen</li>
-                    <li><BiRestaurant /> Dining area</li>
-                    <li><GiCookingPot /> Coffee maker</li>
-                    <li><BiRestaurant /> Wine glasses</li>
-                    <li><GiCookingPot /> Microwave</li>
-                    <li><BiRestaurant /> Outdoor grill</li>
-                    <li><GiCookingPot /> Dishwasher</li>
-                    <li><BiRestaurant /> High chairs</li>
+                    <li><MdKitchen /> Full kitchen</li>
+                    <li><MdOutlineKitchen /> Refrigerator & freezer</li>
+                    <li><MdMicrowave /> Microwave</li>
+                    <li><GiCookingPot /> Induction stove & oven</li>
+                    <li><FaCoffee /> Coffee maker</li>
+                    <li><FaSink /> Dishwasher</li>
+                    <li><GiCookingPot /> Cooking basics (pots, pans, spices)</li>
+                    <li><FaWineGlass /> Wine glasses</li>
+                    <li><MdOutlineBlender /> Toaster & blender</li>
+                    <li><MdOutdoorGrill /> Outdoor kitchen & BBQ grill</li>
                   </ul>
                 </div>
 
                 <div className='feature-category'>
                   <div className='category-header' onClick={() => toggleCategory(3)}>
-                    <h4>Parking & Services</h4>
+                    <h4>Entertainment</h4>
                     <span className={`expand-arrow ${openCategory === 3 ? 'expanded' : ''}`}>▼</span>
                   </div>
                   <ul className={`feature-list ${openCategory === 3 ? '' : 'collapsed'}`}>
-                    <li><FaCar /> Free parking</li>
-                    <li><GiKing /> 24/7 support</li>
-                    <li><FaCar /> EV charging</li>
-                    <li><GiKing /> Concierge service</li>
-                    <li><FaCar /> Secure garage</li>
-                    <li><GiKing /> Housekeeping</li>
-                    <li><FaCar /> Airport shuttle</li>
-                    <li><GiKing /> Tour booking</li>
+                    <li><TbDeviceTv /> 83\" HDTV</li>
+                    <li><FaBluetooth /> Bluetooth sound system</li>
+                    <li><FaBook /> Books & reading material</li>
+                    <li><FaDumbbell /> Exercise equipment</li>
+                    <li><FaDumbbell /> Private gym</li>
+                    <li><FaWifi /> High-speed WiFi</li>
                   </ul>
                 </div>
 
                 <div className='feature-category'>
                   <div className='category-header' onClick={() => toggleCategory(4)}>
-                    <h4>Outdoor & Recreation</h4>
+                    <h4>Outdoor & Views</h4>
                     <span className={`expand-arrow ${openCategory === 4 ? 'expanded' : ''}`}>▼</span>
                   </div>
                   <ul className={`feature-list ${openCategory === 4 ? '' : 'collapsed'}`}>
-                    <li><GiCampingTent /> Private garden</li>
-                    <li><GiWaves /> Lake access</li>
-                    <li><GiCampingTent /> BBQ area</li>
-                    <li><GiWaves /> Fishing dock</li>
-                    <li><GiCampingTent /> Hiking trails</li>
-                    <li><GiWaves /> Boat rental</li>
-                    <li><GiCampingTent /> Fire pit</li>
-                    <li><GiWaves /> Swimming area</li>
+                    <li><FaSwimmingPool /> Private heated pool</li>
+                    <li><FaMountain /> Mountain views</li>
+                    <li><FaUmbrellaBeach /> Ocean view</li>
+                    <li><FaUtensils /> Outdoor dining area</li>
+                    <li><MdOutlineBalcony /> Private patio and balcony</li>
+                    <li><FaCouch /> Outdoor furniture</li>
+                    <li><GiBarbecue /> BBQ area</li>
+                    <li><FaUmbrellaBeach /> Sun loungers</li>
                   </ul>
                 </div>
               </div>
@@ -319,6 +369,71 @@ function App() {
           </div>
         </div>
       </section>
+
+      <section className='gallery' id='gallery'>
+        <div className='gallery-container'>
+          <h2>Gallery</h2>
+          <div className='gallery-grid'>
+            {(showAllGalleryPhotos ? galleryPhotos : galleryPhotos.slice(0, 8)).map((photo, index) => {
+              const actualIndex = showAllGalleryPhotos ? index : index;
+              return (
+                <div
+                  key={actualIndex}
+                  className='gallery-item'
+                  onClick={() => openGalleryModal(actualIndex)}
+                >
+                  <img src={photo} alt={`Gallery photo ${actualIndex + 1}`} />
+                  <div className='gallery-item-overlay'>
+                    <span>View</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {!showAllGalleryPhotos && galleryPhotos.length > 8 && (
+            <div className='gallery-see-more-container'>
+              <button className='gallery-see-more-btn' onClick={() => setShowAllGalleryPhotos(true)}>
+                See more
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {galleryModalOpen !== null && (
+        <div className='gallery-modal-overlay' onClick={closeGalleryModal}>
+          <div className='gallery-modal-content' onClick={(e) => e.stopPropagation()}>
+            <button className='gallery-modal-close' onClick={closeGalleryModal}>
+              <IoClose />
+            </button>
+            <button 
+              className='gallery-modal-nav gallery-modal-prev'
+              onClick={() => prevGalleryPhoto(galleryPhotos.length)}
+            >
+              <IoChevronBack />
+            </button>
+            <div className='gallery-modal-image-container'>
+              <img 
+                src={galleryPhotos[galleryPhotoIndex]} 
+                alt={`Gallery photo ${galleryPhotoIndex + 1}`}
+                className='gallery-modal-image'
+              />
+            </div>
+            <button 
+              className='gallery-modal-nav gallery-modal-next'
+              onClick={() => nextGalleryPhoto(galleryPhotos.length)}
+            >
+              <IoChevronForward />
+            </button>
+            <div className='gallery-modal-info'>
+              <div className='gallery-modal-counter'>
+                {galleryPhotoIndex + 1} / {galleryPhotos.length}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <section className='contact-info' id='contact-info'>
         <div className='contact-info-container'>
           <div className='info-wrapper'>
@@ -330,7 +445,7 @@ function App() {
               <h1>Our contact</h1>
               <ul className="amenities-new">
                   <li><FiPhone /> +37060017933</li>
-                  <li><MdOutlineEmail /> iksass25@gmail.com</li>
+                  {/* <li><MdOutlineEmail /> iksass25@gmail.com</li> */}
               </ul>
             </div>
             <div className='mini-rules-info'>
@@ -348,7 +463,7 @@ function App() {
               <ul>
                 <li>
                   <a
-                    href="https://facebook.com/burbadominykas"
+                    href="https://www.facebook.com/tenerifeinn"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: 'inherit', textDecoration: 'none' }}
@@ -358,7 +473,7 @@ function App() {
                 </li>
                 <li>
                   <a
-                    href="https://www.instagram.com/dominykas_burba/"
+                    href="https://www.instagram.com/tenerifeinn/"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: 'inherit', textDecoration: 'none' }}
@@ -371,6 +486,7 @@ function App() {
           </div>
         </div>
       </section>
+    </div>
       <Footer />
     </>
   )

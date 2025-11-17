@@ -1,13 +1,12 @@
 .room-info {
   min-height: 40rem;
   width: 100%;
-  padding: 1rem 0;
   background-color: #f8f9fa;
 }
 .room-info-container {
-  max-width: 1500px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0;
   width: 100%; 
   min-height:30rem;
 }
@@ -21,12 +20,12 @@
   min-height: 45rem;
 }
 .room-info-photo {
-  background-image: url('/Kitchen.jpg');
+  background-image: url('/BEST.jpg');
   background-size: cover;
   background-position:  center;
-  background-repeat: no-repeat;
-  height: 40rem;
-  width: 40%;
+  background-repeat: repeat;
+  height: 35rem;
+  width: 50%;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -145,7 +144,7 @@
   gap: 1rem;
 }
 .main-info-container {
-  max-width: 1500px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 2rem;   
+  padding: 0;   
 }

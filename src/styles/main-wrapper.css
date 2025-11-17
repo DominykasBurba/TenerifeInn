@@ -1,0 +1,33 @@
+/* Main Page Wrapper - Ensures consistent side margins on all screen sizes */
+.main-page-wrapper {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 4.6875rem; /* 75px = 4.6875rem */
+  background-color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .main-page-wrapper {
+    padding: 0 3rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-page-wrapper {
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-page-wrapper {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-page-wrapper {
+    padding: 0 1rem;
+  }
+}
+

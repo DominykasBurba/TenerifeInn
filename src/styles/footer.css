@@ -9,3 +9,38 @@
     padding-top: 1rem;
     color: black;
 }
+
+.footer-container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 4.6875rem; /* 75px = 4.6875rem */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+    .footer-container {
+        padding: 0 3rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .footer-container {
+        padding: 0 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-container {
+        padding: 0 1rem;
+    }
+}

@@ -10,11 +10,12 @@ export default function Header() {
               About
             </a>
             <a href="#room-info">Facility</a>
+            <a href="#gallery">Gallery</a>
             <a href="#contact-info">Contact</a>
           </div>
 
           <div className="nav-center">
-            <h1 className="brand">Los OLivos Villa</h1>
+            <h1 className="brand" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} style={{ cursor: "pointer" }}>Villa Los OLivos</h1>
           </div>
 
           <div className="nav-right">
