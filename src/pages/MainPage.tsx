@@ -73,7 +73,7 @@ function App() {
   const bedroomGalleries = [
     {
       title: "Bedroom 1",
-      description: "King-size bed • Balcony • Ocean view • Ensuite bathroom   ",
+      description: "King-size bed • Balcony • Ocean view • Ensuite bathroom",
       photos: ['/FirstBedroom/First.jpg', '/FirstBedroom/First2.jpg', '/FirstBedroom/First3.jpg', '/FirstBedroom/First4.jpg', '/FirstBedroom/First5.jpg', '/FirstBedroom/First6.jpg', '/FirstBedroom/First7.jpg']
     },
     {

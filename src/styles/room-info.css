@@ -18,6 +18,7 @@
   gap: 1rem;
   width: 100%; 
   min-height: 45rem;
+  padding: 2rem;
 }
 .room-info-photo {
   background-image: url('/BEST.jpg');
