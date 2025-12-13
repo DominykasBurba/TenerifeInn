@@ -1,21 +1,37 @@
 import "../styles/header.css";
+import { useState } from "react";
+import { IoMenu, IoClose } from "react-icons/io5";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleNavClick = () => {
+    closeMenu();
+  };
+
   return (
     <header className="header">
       <div className="header-container">
         <nav className="top-nav">
           <div className="nav-left">
-            <a onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+            <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
               About
             </a>
-            <a href="#room-info">Facility</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#contact-info">Contact</a>
+            <a href="#room-info" onClick={handleNavClick}>Facility</a>
+            <a href="#gallery" onClick={handleNavClick}>Gallery</a>
+            <a href="#contact-info" onClick={handleNavClick}>Contact</a>
           </div>
 
           <div className="nav-center">
-            <h1 className="brand" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} style={{ cursor: "pointer" }}>Villa Los OLivos</h1>
+            <h1 className="brand" onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }} style={{ cursor: "pointer" }}>Villa Los OLivos</h1>
           </div>
 
           <div className="nav-right">
@@ -27,7 +43,20 @@ export default function Header() {
               <button className="reservation-btn">Make a Reservation</button>
             </a>
           </div>
+
+          <button className="mobile-menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+            {isMenuOpen ? <IoClose /> : <IoMenu />}
+          </button>
         </nav>
+
+        <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+          <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
+            About
+          </a>
+          <a href="#room-info" onClick={handleNavClick}>Facility</a>
+          <a href="#gallery" onClick={handleNavClick}>Gallery</a>
+          <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+        </div>
       </div>
     </header>
   );

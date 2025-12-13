@@ -290,6 +290,10 @@
     padding: 2rem 0;
   }
 
+  .gallery-container {
+    padding: 0 1.5rem;
+  }
+
   .gallery h2 {
     font-size: 1.8rem;
     margin-bottom: 2rem;
@@ -323,6 +327,10 @@
 @media (max-width: 480px) {
   .gallery-container {
     padding: 0 1rem;
+  }
+
+  .gallery {
+    padding: 1.5rem 0;
   }
 
   .gallery h2 {

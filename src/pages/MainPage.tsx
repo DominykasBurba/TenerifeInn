@@ -14,7 +14,7 @@ import { LuClock2 } from "react-icons/lu";
 import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { FaDumbbell, FaBook, FaBluetooth, FaSink, FaCoffee, FaPumpSoap, FaWind, FaFacebook, FaSoap, FaInstagram, FaBath, FaShower, FaTshirt, FaBed, FaWineGlass, FaUtensils, FaWifi, FaSwimmingPool, FaMountain, FaUmbrellaBeach, FaLock, FaCouch } from 'react-icons/fa';
 import { GiClothesline, GiHanger, GiWashingMachine, GiCookingPot, GiBarbecue, GiClothes } from 'react-icons/gi';
-import { MdOutlineKitchen , MdOutlineBlender, MdMicrowave, MdCurtains, MdOutlineBedroomParent, MdOutlineWaterDrop, MdOutdoorGrill, MdOutlineBalcony, MdKitchen} from 'react-icons/md';
+import { MdOutlineKitchen , MdOutlineBlender, MdMicrowave, MdCurtains, MdOutlineBedroomParent, MdOutlineWaterDrop, MdOutdoorGrill, MdOutlineBalcony, MdKitchen, MdOutlineEmail} from 'react-icons/md';
 import { TbDeviceTv } from 'react-icons/tb';
 
 
@@ -374,7 +374,7 @@ function App() {
         <div className='gallery-container'>
           <h2>Gallery</h2>
           <div className='gallery-grid'>
-            {(showAllGalleryPhotos ? galleryPhotos : galleryPhotos.slice(0, 8)).map((photo, index) => {
+            {(showAllGalleryPhotos ? galleryPhotos : galleryPhotos.slice(0, 10)).map((photo, index) => {
               const actualIndex = showAllGalleryPhotos ? index : index;
               return (
                 <div
@@ -390,7 +390,7 @@ function App() {
               );
             })}
           </div>
-          {!showAllGalleryPhotos && galleryPhotos.length > 8 && (
+          {!showAllGalleryPhotos && galleryPhotos.length > 10 && (
             <div className='gallery-see-more-container'>
               <button className='gallery-see-more-btn' onClick={() => setShowAllGalleryPhotos(true)}>
                 See more
@@ -438,14 +438,14 @@ function App() {
         <div className='contact-info-container'>
           <div className='info-wrapper'>
             <div className='basic-info'>
-              <h1>Los OLivos Villa</h1>
+              <h1>Villa Los OLivos</h1>
               <p>We want your stay at Villa Los Olivos to be effortless, relaxing, and filled with good memories. Every corner of Villa Los Olivos was designed with care by your host, Andre. We simply ask you to enjoy it with the same attention and love with which it was created.</p>
             </div>
             <div className='mini-contact-info'>
               <h1>Our contact</h1>
               <ul className="amenities-new">
                   <li><FiPhone /> +37060017933</li>
-                  {/* <li><MdOutlineEmail /> iksass25@gmail.com</li> */}
+                  <li><MdOutlineEmail /> tenerifeinn77@gmail.com</li>
               </ul>
             </div>
             <div className='mini-rules-info'>
@@ -457,7 +457,7 @@ function App() {
             </div>
           </div>
           <div className='details-info'> 
-            <div className='details-info-first'><p>2025 • Los OLivos Villa</p></div>
+            <div className='details-info-first'><p>2025 • Villa Los OLivos</p></div>
             <div className='details-info-second'><p>English (US)</p></div>
             <div className='details-info-third'>
               <ul>

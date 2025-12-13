@@ -333,6 +333,10 @@
     padding: 2rem 0;
   }
 
+  .bedroom-grid-container {
+    padding: 0 1.5rem;
+  }
+
   .bedroom-grid h2 {
     font-size: 1.8rem;
     margin-bottom: 2rem;
@@ -341,6 +345,7 @@
   .bedroom-grid-wrapper {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    padding: 0 0 2rem 0;
   }
 
   .bedroom-grid-photo {
@@ -387,6 +392,10 @@
 @media (max-width: 480px) {
   .bedroom-grid-container {
     padding: 0 1rem;
+  }
+
+  .bedroom-grid {
+    padding: 1.5rem 0;
   }
 
   .bedroom-grid h2 {
