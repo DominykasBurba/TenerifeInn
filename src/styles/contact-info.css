@@ -171,7 +171,7 @@
 .details-info-third li {
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 
 /* Responsive Design */
@@ -365,7 +365,7 @@
   }
 
   .details-info-third li {
-    font-size: 1rem;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
   }
@@ -477,7 +477,7 @@
   }
 
   .details-info-third li {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
   }
@@ -526,6 +526,6 @@
   }
 
   .details-info-third li {
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
 }

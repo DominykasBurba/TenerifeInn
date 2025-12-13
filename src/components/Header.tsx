@@ -31,7 +31,13 @@ export default function Header() {
           </div>
 
           <div className="nav-center">
-            <h1 className="brand" onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }} style={{ cursor: "pointer" }}>Villa Los OLivos</h1>
+            <img 
+              src="/LOGOTenerifeinn.jpg" 
+              alt="Villa Los Olivos" 
+              className="brand-logo" 
+              onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }} 
+              style={{ cursor: "pointer" }}
+            />
           </div>
 
           <div className="nav-right">

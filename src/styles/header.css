@@ -57,6 +57,17 @@
   font-family: 'Poppins', sans-serif;
 }
 
+.brand-logo {
+  height: 3.5rem;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.05);
+}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -221,6 +232,10 @@
     font-size: 1.4rem;
   }
 
+  .brand-logo {
+    height: 2.5rem;
+  }
+
   .reservation-btn {
     padding: 0.7rem 1.2rem;
     font-size: 0.85rem;
@@ -238,6 +253,10 @@
 
   .brand {
     font-size: 1.2rem;
+  }
+
+  .brand-logo {
+    height: 2rem;
   }
 
   .reservation-btn {

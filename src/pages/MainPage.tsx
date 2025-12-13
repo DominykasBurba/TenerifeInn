@@ -116,7 +116,35 @@ function App() {
     '/Gallery/IMG_2966-HDR copy.jpg',
     '/Gallery/IMG_2970-HDR copy.jpg',
     '/Gallery/IMG_2973-HDR copy.jpg',
-    '/Gallery/IMG_2984 copy.jpg'
+    '/Gallery/IMG_2984 copy.jpg',
+    // Bedroom 1 photos
+    '/FirstBedroom/First.jpg',
+    '/FirstBedroom/First2.jpg',
+    '/FirstBedroom/First3.jpg',
+    '/FirstBedroom/First4.jpg',
+    '/FirstBedroom/First5.jpg',
+    '/FirstBedroom/First6.jpg',
+    '/FirstBedroom/First7.jpg',
+    // Bedroom 2 photos
+    '/SecondBedroom/Second.jpg',
+    '/SecondBedroom/Second2.jpg',
+    '/SecondBedroom/Second3.jpg',
+    '/SecondBedroom/Second4.jpg',
+    '/SecondBedroom/Second5.jpg',
+    // Bedroom 3 photos
+    '/ThirdBedroom/Third.jpg',
+    '/ThirdBedroom/Third1.jpg',
+    '/ThirdBedroom/Third2.jpg',
+    '/ThirdBedroom/Third3.jpg',
+    '/ThirdBedroom/Third4.jpg',
+    '/ThirdBedroom/Third5.jpg',
+    // Bedroom 4 photos
+    '/FourthBedroom/Fourth.jpg',
+    '/FourthBedroom/Fourth2.jpg',
+    '/FourthBedroom/Fourth3.jpg',
+    '/FourthBedroom/Fourth4.jpg',
+    '/FourthBedroom/Fourth5.jpg',
+    '/FourthBedroom/Fourth6.jpg'
   ];
 
   useEffect(() => {
