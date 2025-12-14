@@ -35,6 +35,7 @@ export default function Header() {
                 <a href="#room-info" onClick={handleNavClick}>Facility</a>
                 <a href="#gallery" onClick={handleNavClick}>Gallery</a>
                 <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+                <Link to="/form" onClick={handleNavClick}>Form</Link>
               </>
             )}
           </div>
@@ -81,6 +82,7 @@ export default function Header() {
               <a href="#room-info" onClick={handleNavClick}>Facility</a>
               <a href="#gallery" onClick={handleNavClick}>Gallery</a>
               <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+              <Link to="/form" onClick={handleNavClick}>Form</Link>
             </>
           )}
         </div>
