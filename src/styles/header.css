@@ -58,7 +58,7 @@
 }
 
 .brand-logo {
-  height: 3.5rem;
+  height: 5rem;
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
@@ -88,6 +88,27 @@
 
 .reservation-btn:hover {
   background-color: #333;
+}
+
+.airbnb-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.airbnb-logo {
+  height: 2.5rem;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.airbnb-logo:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 /* Mobile Menu Toggle Button */
@@ -233,12 +254,16 @@
   }
 
   .brand-logo {
-    height: 2.5rem;
+    height: 3.5rem;
   }
 
   .reservation-btn {
     padding: 0.7rem 1.2rem;
     font-size: 0.85rem;
+  }
+
+  .airbnb-logo {
+    height: 2rem;
   }
 }
 
@@ -256,12 +281,16 @@
   }
 
   .brand-logo {
-    height: 2rem;
+    height: 3rem;
   }
 
   .reservation-btn {
     padding: 0.6rem 1rem;
     font-size: 0.8rem;
+  }
+
+  .airbnb-logo {
+    height: 1.8rem;
   }
 
   .mobile-menu {

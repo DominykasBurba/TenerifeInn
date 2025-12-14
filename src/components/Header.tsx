@@ -1,9 +1,12 @@
 import "../styles/header.css";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { IoMenu, IoClose } from "react-icons/io5";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isFormPage = location.pathname === '/form';
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,22 +25,29 @@ export default function Header() {
       <div className="header-container">
         <nav className="top-nav">
           <div className="nav-left">
-            <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
-              About
-            </a>
-            <a href="#room-info" onClick={handleNavClick}>Facility</a>
-            <a href="#gallery" onClick={handleNavClick}>Gallery</a>
-            <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+            {isFormPage ? (
+              <Link to="/" onClick={handleNavClick}>Home</Link>
+            ) : (
+              <>
+                <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
+                  About
+                </a>
+                <a href="#room-info" onClick={handleNavClick}>Facility</a>
+                <a href="#gallery" onClick={handleNavClick}>Gallery</a>
+                <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+              </>
+            )}
           </div>
 
           <div className="nav-center">
-            <img 
-              src="/LOGOTenerifeinn.jpg" 
-              alt="Villa Los Olivos" 
-              className="brand-logo" 
-              onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }} 
-              style={{ cursor: "pointer" }}
-            />
+            <Link to="/" onClick={handleNavClick}>
+              <img 
+                src="/LOGONEWTENERIFE.png" 
+                alt="Villa Los Olivos" 
+                className="brand-logo" 
+                style={{ cursor: "pointer" }}
+              />
+            </Link>
           </div>
 
           <div className="nav-right">
@@ -45,8 +55,13 @@ export default function Header() {
               href="https://www.airbnb.com/rooms/1513066939468971782?photo_id=2398882751&source_impression_id=p3_1762810892_P3cEs9DH4rnDr8Dy&previous_page_section_name=1000"
               target="_blank"
               rel="noopener noreferrer"
+              className="airbnb-logo-link"
             >
-              <button className="reservation-btn">Make a Reservation</button>
+              <img 
+                src="/Airbnb-Logo-Best.png" 
+                alt="" 
+                className="airbnb-logo"
+              />
             </a>
           </div>
 
@@ -56,12 +71,18 @@ export default function Header() {
         </nav>
 
         <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
-          <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
-            About
-          </a>
-          <a href="#room-info" onClick={handleNavClick}>Facility</a>
-          <a href="#gallery" onClick={handleNavClick}>Gallery</a>
-          <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+          {isFormPage ? (
+            <Link to="/" onClick={handleNavClick}>Home</Link>
+          ) : (
+            <>
+              <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
+                About
+              </a>
+              <a href="#room-info" onClick={handleNavClick}>Facility</a>
+              <a href="#gallery" onClick={handleNavClick}>Gallery</a>
+              <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+            </>
+          )}
         </div>
       </div>
     </header>
