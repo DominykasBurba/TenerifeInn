@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 import Header from '../components/Header.tsx';
 import '../styles/form-page.css';
