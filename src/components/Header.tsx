@@ -6,7 +6,7 @@ import { IoMenu, IoClose } from "react-icons/io5";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const isFormPage = location.pathname === '/form';
+  const isFormPage = location.pathname.startsWith('/form');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -24,7 +24,7 @@ export default function Header() {
     <header className="header">
       <div className="header-container">
         <nav className="top-nav">
-          {!isFormPage && (
+          {!isFormPage ? (
             <div className="nav-left">
               <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
                 About
@@ -32,8 +32,9 @@ export default function Header() {
               <a href="#room-info" onClick={handleNavClick}>Facility</a>
               <a href="#gallery" onClick={handleNavClick}>Gallery</a>
               <a href="#contact-info" onClick={handleNavClick}>Contact</a>
-              <Link to="/form" onClick={handleNavClick}>Form</Link>
             </div>
+          ) : (
+            <div className="nav-left"></div>
           )}
 
           <div className="nav-center">
@@ -57,9 +58,11 @@ export default function Header() {
             </a>
           </div>
 
-          <button className="mobile-menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
-            {isMenuOpen ? <IoClose /> : <IoMenu />}
-          </button>
+          {!isFormPage && (
+            <button className="mobile-menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+              {isMenuOpen ? <IoClose /> : <IoMenu />}
+            </button>
+          )}
         </nav>
 
         {!isFormPage && (
@@ -70,7 +73,6 @@ export default function Header() {
             <a href="#room-info" onClick={handleNavClick}>Facility</a>
             <a href="#gallery" onClick={handleNavClick}>Gallery</a>
             <a href="#contact-info" onClick={handleNavClick}>Contact</a>
-            <Link to="/form" onClick={handleNavClick}>Form</Link>
           </div>
         )}
       </div>

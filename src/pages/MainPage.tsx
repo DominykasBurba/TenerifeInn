@@ -472,7 +472,7 @@ function App() {
             <div className='mini-contact-info'>
               <h1>Our contact</h1>
               <ul className="amenities-new">
-                  <li><FiPhone /> +37060017933</li>
+                  <li><FiPhone /> +34613477355</li>
                   <li><MdOutlineEmail /> tenerifeinn77@gmail.com</li>
               </ul>
             </div>
@@ -511,7 +511,7 @@ function App() {
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/37060017933"
+                    href="https://wa.me/34613477355"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: 'inherit', textDecoration: 'none' }}
