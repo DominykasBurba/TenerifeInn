@@ -57,9 +57,29 @@
   font-family: 'Poppins', sans-serif;
 }
 
+.brand-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.brand-text:hover {
+  color: #5a6c7d;
+}
+
 .brand-logo {
-  height: 5rem;
+  height: 5.5rem;
   width: auto;
+  max-height: 100%;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -71,6 +91,7 @@
 .nav-right {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .reservation-btn {
@@ -97,9 +118,10 @@
 }
 
 .airbnb-logo {
-  height: 2.5rem;
+  height: 2.8rem;
   width: auto;
-  max-width: 120px;
+  max-width: 180px;
+  max-height: 100%;
   object-fit: contain;
   display: block;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -254,7 +276,7 @@
   }
 
   .brand-logo {
-    height: 3.5rem;
+    height: 4.5rem;
   }
 
   .reservation-btn {
@@ -281,7 +303,7 @@
   }
 
   .brand-logo {
-    height: 3rem;
+    height: 4rem;
   }
 
   .reservation-btn {
@@ -290,7 +312,7 @@
   }
 
   .airbnb-logo {
-    height: 1.8rem;
+    height: 1.7rem;
   }
 
   .mobile-menu {

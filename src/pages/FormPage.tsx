@@ -1,7 +1,9 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 import Header from '../components/Header.tsx';
 import '../styles/form-page.css';
+
+const STORAGE_KEY = 'travelers_registration_form_data';
 
 interface TravelerData {
   firstName: string;
@@ -12,17 +14,28 @@ interface TravelerData {
   nationality: string;
   dateOfBirth: string;
   addressLine1: string;
-  addressLine2: string;
   countryOfResidence: string;
   mobilePhone: string;
   email: string;
-  signatureDate: string;
-  signature: string;
 }
 
 export default function FormPage() {
-  const [travelers, setTravelers] = useState<TravelerData[]>([
-    {
+  // Load saved data from localStorage on component mount
+  const loadSavedData = (): TravelerData[] => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Validate that we have valid data structure
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (error) {
+      console.error('Error loading saved form data:', error);
+    }
+    // Return default empty traveler if no saved data
+    return [{
       firstName: '',
       firstSurname: '',
       secondSurname: '',
@@ -31,16 +44,24 @@ export default function FormPage() {
       nationality: '',
       dateOfBirth: '',
       addressLine1: '',
-      addressLine2: '',
       countryOfResidence: '',
       mobilePhone: '',
-      email: '',
-      signatureDate: '',
-      signature: ''
-    }
-  ]);
+      email: ''
+    }];
+  };
+
+  const [travelers, setTravelers] = useState<TravelerData[]>(loadSavedData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  // Save form data to localStorage whenever travelers state changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(travelers));
+    } catch (error) {
+      console.error('Error saving form data:', error);
+    }
+  }, [travelers]);
 
   const handleTravelerChange = (index: number, field: keyof TravelerData, value: string) => {
     setTravelers(prev => {
@@ -65,8 +86,7 @@ export default function FormPage() {
         countryOfResidence: '',
         mobilePhone: '',
         email: '',
-        signatureDate: '',
-        signature: ''
+        signatureDate: ''
       }]);
     }
   };
@@ -86,9 +106,9 @@ export default function FormPage() {
     return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4, 8)}`;
   };
 
-  const handleDateChange = (index: number, field: 'dateOfBirth' | 'signatureDate', value: string) => {
+  const handleDateChange = (index: number, value: string) => {
     const formatted = formatDateInput(value);
-    handleTravelerChange(index, field, formatted);
+    handleTravelerChange(index, 'dateOfBirth', formatted);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -107,29 +127,31 @@ export default function FormPage() {
         throw new Error('EmailJS not configured. Please set up your EmailJS credentials. See EMAILJS_SETUP.md for instructions.');
       }
 
-      // Format travelers data for email
-      const travelersData = travelers.map((traveler, idx) => ({
-        travelerNumber: idx + 1,
-        firstName: traveler.firstName,
-        firstSurname: traveler.firstSurname,
-        secondSurname: traveler.secondSurname || 'N/A',
-        gender: traveler.gender,
-        passportId: traveler.passportId,
-        nationality: traveler.nationality,
-        dateOfBirth: traveler.dateOfBirth,
-        address: `${traveler.addressLine1}${traveler.addressLine2 ? ', ' + traveler.addressLine2 : ''}`,
-        countryOfResidence: traveler.countryOfResidence,
-        mobilePhone: traveler.mobilePhone,
-        email: traveler.email,
-        signatureDate: traveler.signatureDate,
-        signature: traveler.signature || 'Digital Signature'
-      }));
+      // Format travelers data as readable text for email
+      const formattedTravelersData = travelers.map((traveler, idx) => {
+        const travelerNum = idx + 1;
+        return `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TRAVELER ${travelerNum}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+First Name: ${traveler.firstName}
+First Surname: ${traveler.firstSurname}
+${traveler.secondSurname ? `Second Surname: ${traveler.secondSurname}` : ''}
+Gender: ${traveler.gender === 'male' ? 'Male' : traveler.gender === 'female' ? 'Female' : 'Not specified'}
+Passport/ID Number: ${traveler.passportId}
+Nationality: ${traveler.nationality}
+Date of Birth: ${traveler.dateOfBirth}
+Address: ${traveler.addressLine1}
+Country of Residence: ${traveler.countryOfResidence}
+Mobile Phone: ${traveler.mobilePhone}
+Email: ${traveler.email}`;
+      }).join('\n\n');
 
       // Prepare email template parameters
       const templateParams = {
         to_email: 'iksass25@gmail.com',
         travelers_count: travelers.length.toString(),
-        travelers_data: JSON.stringify(travelersData, null, 2),
+        travelers_data: formattedTravelersData,
         submission_date: new Date().toLocaleString(),
         from_name: 'Travelers Registration Form',
         reply_to: travelers[0]?.email || 'noreply@example.com'
@@ -138,8 +160,9 @@ export default function FormPage() {
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
       
       setSubmitStatus('success');
-      // Reset form after successful submission
+      // Clear saved data and reset form after successful submission
       setTimeout(() => {
+        localStorage.removeItem(STORAGE_KEY);
         setTravelers([{
           firstName: '',
           firstSurname: '',
@@ -149,12 +172,9 @@ export default function FormPage() {
           nationality: '',
           dateOfBirth: '',
           addressLine1: '',
-          addressLine2: '',
           countryOfResidence: '',
           mobilePhone: '',
-          email: '',
-          signatureDate: '',
-          signature: ''
+          email: ''
         }]);
         setSubmitStatus('idle');
       }, 5000);
@@ -305,7 +325,7 @@ export default function FormPage() {
                       type="text"
                       id={`dateOfBirth-${travelerIndex}`}
                       value={traveler.dateOfBirth}
-                      onChange={(e) => handleDateChange(travelerIndex, 'dateOfBirth', e.target.value)}
+                      onChange={(e) => handleDateChange(travelerIndex, e.target.value)}
                       placeholder="DD/MM/YYYY"
                       maxLength={10}
                       required
@@ -326,15 +346,6 @@ export default function FormPage() {
                       value={traveler.addressLine1}
                       onChange={(e) => handleTravelerChange(travelerIndex, 'addressLine1', e.target.value)}
                       required
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      id={`addressLine2-${travelerIndex}`}
-                      value={traveler.addressLine2}
-                      onChange={(e) => handleTravelerChange(travelerIndex, 'addressLine2', e.target.value)}
                     />
                   </div>
 
@@ -379,37 +390,6 @@ export default function FormPage() {
                       onChange={(e) => handleTravelerChange(travelerIndex, 'email', e.target.value)}
                       required
                     />
-                  </div>
-
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor={`signatureDate-${travelerIndex}`}>
-                        Date: <span className="required">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id={`signatureDate-${travelerIndex}`}
-                        value={traveler.signatureDate}
-                        onChange={(e) => handleDateChange(travelerIndex, 'signatureDate', e.target.value)}
-                        placeholder="DD/MM/YYYY"
-                        maxLength={10}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor={`signature-${travelerIndex}`}>
-                        Signature: <span className="required">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id={`signature-${travelerIndex}`}
-                        value={traveler.signature}
-                        onChange={(e) => handleTravelerChange(travelerIndex, 'signature', e.target.value)}
-                        placeholder="Type your full name"
-                        required
-                      />
-                    </div>
                   </div>
                 </div>
               </div>

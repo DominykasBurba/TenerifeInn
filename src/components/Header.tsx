@@ -24,30 +24,21 @@ export default function Header() {
     <header className="header">
       <div className="header-container">
         <nav className="top-nav">
-          <div className="nav-left">
-            {isFormPage ? (
-              <Link to="/" onClick={handleNavClick}>Home</Link>
-            ) : (
-              <>
-                <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
-                  About
-                </a>
-                <a href="#room-info" onClick={handleNavClick}>Facility</a>
-                <a href="#gallery" onClick={handleNavClick}>Gallery</a>
-                <a href="#contact-info" onClick={handleNavClick}>Contact</a>
-                <Link to="/form" onClick={handleNavClick}>Form</Link>
-              </>
-            )}
-          </div>
+          {!isFormPage && (
+            <div className="nav-left">
+              <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
+                About
+              </a>
+              <a href="#room-info" onClick={handleNavClick}>Facility</a>
+              <a href="#gallery" onClick={handleNavClick}>Gallery</a>
+              <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+              <Link to="/form" onClick={handleNavClick}>Form</Link>
+            </div>
+          )}
 
           <div className="nav-center">
-            <Link to="/" onClick={handleNavClick}>
-              <img 
-                src="/LOGONEWTENERIFE.png" 
-                alt="Villa Los Olivos" 
-                className="brand-logo" 
-                style={{ cursor: "pointer" }}
-              />
+            <Link to="/" onClick={handleNavClick} className="brand-link">
+              <span className="brand-text">Villa Los Olivos</span>
             </Link>
           </div>
 
@@ -59,7 +50,7 @@ export default function Header() {
               className="airbnb-logo-link"
             >
               <img 
-                src="/Airbnb-Logo-Best.png" 
+                src="/Airbnb_Logo_Test.svg" 
                 alt="" 
                 className="airbnb-logo"
               />
@@ -71,21 +62,17 @@ export default function Header() {
           </button>
         </nav>
 
-        <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
-          {isFormPage ? (
-            <Link to="/" onClick={handleNavClick}>Home</Link>
-          ) : (
-            <>
-              <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
-                About
-              </a>
-              <a href="#room-info" onClick={handleNavClick}>Facility</a>
-              <a href="#gallery" onClick={handleNavClick}>Gallery</a>
-              <a href="#contact-info" onClick={handleNavClick}>Contact</a>
-              <Link to="/form" onClick={handleNavClick}>Form</Link>
-            </>
-          )}
-        </div>
+        {!isFormPage && (
+          <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+            <a onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); handleNavClick(); }}>
+              About
+            </a>
+            <a href="#room-info" onClick={handleNavClick}>Facility</a>
+            <a href="#gallery" onClick={handleNavClick}>Gallery</a>
+            <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+            <Link to="/form" onClick={handleNavClick}>Form</Link>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -12,7 +12,7 @@ import { GoPeople } from "react-icons/go";
 import { FiPhone } from "react-icons/fi";
 import { LuClock2 } from "react-icons/lu";
 import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
-import { FaDumbbell, FaBook, FaBluetooth, FaSink, FaCoffee, FaPumpSoap, FaWind, FaFacebook, FaSoap, FaInstagram, FaBath, FaShower, FaTshirt, FaBed, FaWineGlass, FaUtensils, FaWifi, FaSwimmingPool, FaMountain, FaUmbrellaBeach, FaLock, FaCouch } from 'react-icons/fa';
+import { FaDumbbell, FaBook, FaBluetooth, FaSink, FaCoffee, FaPumpSoap, FaWind, FaFacebook, FaSoap, FaInstagram, FaBath, FaShower, FaTshirt, FaBed, FaWineGlass, FaUtensils, FaWifi, FaSwimmingPool, FaMountain, FaUmbrellaBeach, FaLock, FaCouch, FaWhatsapp } from 'react-icons/fa';
 import { GiClothesline, GiHanger, GiWashingMachine, GiCookingPot, GiBarbecue, GiClothes } from 'react-icons/gi';
 import { MdOutlineKitchen , MdOutlineBlender, MdMicrowave, MdCurtains, MdOutlineBedroomParent, MdOutlineWaterDrop, MdOutdoorGrill, MdOutlineBalcony, MdKitchen, MdOutlineEmail} from 'react-icons/md';
 import { TbDeviceTv } from 'react-icons/tb';
@@ -507,6 +507,16 @@ function App() {
                     style={{ color: 'inherit', textDecoration: 'none' }}
                   >
                     <FaInstagram />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://wa.me/37060017933"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'inherit', textDecoration: 'none' }}
+                  >
+                    <FaWhatsapp />
                   </a>
                 </li>
               </ul>
