@@ -4,10 +4,11 @@ import '../styles/room-info.css'
 import '../components/Header.tsx'
 import '../styles/bedroom-grid.css'
 import '../styles/gallery.css'
+import '../styles/reviews.css'
 import '../styles/main-wrapper.css'
 import Header from '../components/Header.tsx'
 import Footer from '../components/Footer.tsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect, type TransitionEvent } from 'react';
 import { GoPeople } from "react-icons/go";
 import { FiPhone } from "react-icons/fi";
 import { LuClock2 } from "react-icons/lu";
@@ -25,6 +26,13 @@ function App() {
   const [galleryModalOpen, setGalleryModalOpen] = useState<number | null>(null);
   const [galleryPhotoIndex, setGalleryPhotoIndex] = useState(0);
   const [showAllGalleryPhotos, setShowAllGalleryPhotos] = useState(false);
+  const [galleryPreviewLimit, setGalleryPreviewLimit] = useState(10);
+  const reviewsInnerRef = useRef<HTMLDivElement | null>(null);
+  const reviewsCardIndexRef = useRef(0);
+  const pauseReviewsAutoSlideRef = useRef(false);
+  const [reviewsStepPx, setReviewsStepPx] = useState(0);
+  const [reviewsCardIndex, setReviewsCardIndex] = useState(0);
+  const [reviewsTransition, setReviewsTransition] = useState(true);
 
   const toggleCategory = (index: number) => {
     if (openCategory === index) {
@@ -96,9 +104,9 @@ function App() {
   const galleryPhotos = [
     '/Gallery/IMG_2772-HDR copy (1).jpg',
     '/Gallery/IMG_2774-HDR copy 2.jpg',
-    '/Gallery/IMG_2776-HDR copy 2 (1).jpg',
-    '/Gallery/IMG_2778-HDR copy.jpg',
     '/Gallery/IMG_2783-HDR copy.jpg',
+    '/Gallery/NewTerrasa.jpg',
+    '/Gallery/NewTerrasa2.jpg',
     '/Gallery/IMG_2785-HDR copy.jpg',
     '/Gallery/IMG_2790-HDR copy.jpg',
     '/Gallery/IMG_2823 copy.jpg',
@@ -146,6 +154,169 @@ function App() {
     '/FourthBedroom/Fourth5.jpg',
     '/FourthBedroom/Fourth6.jpg'
   ];
+
+  const reviews = [
+    {
+      name: 'Daniel',
+      date: '3 weeks ago',
+      source: 'Airbnb',
+      text: "Great 5-night stay. The photos do not do this property justice. Everything feels brand new and finished to a very high standard, and the heated pool was perfect for relaxing even in cooler weather."
+    },
+    {
+      name: 'Maciej',
+      date: 'March 2026',
+      source: 'Airbnb',
+      text: 'The villa looked even better than in the photos, in a quiet area with mountain and ocean views. It was fully equipped with everything we needed, from kitchen essentials to bathroom amenities.'
+    },
+    {
+      name: 'Karina',
+      date: 'March 2026',
+      source: 'Airbnb',
+      text: 'The villa is beautiful and clearly prepared with care. We loved the gym, the barbecue area, and how responsive and helpful the host was throughout our stay.'
+    },
+    {
+      name: 'Ana',
+      date: 'February 2026',
+      source: 'Airbnb',
+      text: 'An incredible stay in a stunning new villa in Adeje. With four comfortable bedrooms and a fully equipped kitchen, it was ideal for our group. The patio and private pool were highlights.'
+    },
+    {
+      name: 'Kirsty',
+      date: 'February 2026',
+      source: 'Airbnb',
+      text: 'The villa exceeded expectations. Luxury finishes and thoughtful details made our stay genuinely special. A perfect setting for celebrating important family occasions.'
+    },
+    {
+      name: 'Craig',
+      date: 'January 2026',
+      source: 'Airbnb',
+      text: 'We returned after a week here and the property was spotless and finished to a high standard. The garden and heated pool were amazing. We will definitely return.'
+    },
+    {
+      name: 'Ariyan',
+      date: 'December 2025',
+      source: 'Airbnb',
+      text: 'Incredibly cozy and lovely villa. The host team was very kind and helpful, and the villa had everything we needed for a comfortable and memorable holiday.'
+    },
+    {
+      name: 'Andrius',
+      date: 'November 2025',
+      source: 'Airbnb',
+      text: 'A truly exceptional stay in a brand-new luxury villa. We loved the large terrace, crystal-clear heated pool, modern gym, and excellent location near Adeje Old Town.'
+    },
+    {
+      name: 'Chris',
+      date: '2 days ago',
+      source: 'Airbnb',
+      text: 'My family and I had an amazing 5-day holiday. The villa was incredible—better than the pictures. The pool was a highlight, especially for the kids, who loved it and spent hours in it every day. The hosts were kind and welcoming, making us feel relaxed from the moment we arrived.'
+    }
+  ];
+
+  const loopedReviews = [...reviews, ...reviews, ...reviews];
+  const reviewCount = reviews.length;
+
+  const measureReviewsStep = () => {
+    const inner = reviewsInnerRef.current;
+    if (!inner) return 0;
+    const card = inner.querySelector('.review-card') as HTMLElement | null;
+    if (!card) return 0;
+    const innerStyles = window.getComputedStyle(inner);
+    const gap = Number.parseFloat(innerStyles.columnGap || innerStyles.gap || '0');
+    return card.offsetWidth + gap;
+  };
+
+  const syncReviewsCardIndex = (next: number) => {
+    reviewsCardIndexRef.current = next;
+    setReviewsCardIndex(next);
+  };
+
+  useLayoutEffect(() => {
+    if (reviewCount === 0) return;
+    const step = measureReviewsStep();
+    if (step <= 0) return;
+    setReviewsStepPx(step);
+    syncReviewsCardIndex(reviewCount);
+  }, [reviewCount]);
+
+  useEffect(() => {
+    const inner = reviewsInnerRef.current;
+    if (!inner) return;
+
+    const handleResize = () => {
+      const step = measureReviewsStep();
+      if (step <= 0) return;
+      setReviewsStepPx(step);
+      setReviewsTransition(false);
+      syncReviewsCardIndex(reviewCount);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setReviewsTransition(true));
+      });
+    };
+
+    const observer = new ResizeObserver(handleResize);
+    observer.observe(inner);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [reviewCount]);
+
+  const slideReviews = (direction: 'left' | 'right') => {
+    if (reviewCount === 0 || reviewsStepPx <= 0) return;
+    setReviewsTransition(true);
+    const delta = direction === 'right' ? 1 : -1;
+    syncReviewsCardIndex(reviewsCardIndexRef.current + delta);
+  };
+
+  const handleReviewsTransitionEnd = (e: TransitionEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return;
+    if (e.propertyName !== 'transform') return;
+    if (reviewCount === 0) return;
+
+    let next = reviewsCardIndexRef.current;
+    let changed = false;
+    while (next >= 2 * reviewCount) {
+      next -= reviewCount;
+      changed = true;
+    }
+    while (next < reviewCount) {
+      next += reviewCount;
+      changed = true;
+    }
+
+    if (changed) {
+      setReviewsTransition(false);
+      syncReviewsCardIndex(next);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setReviewsTransition(true));
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (reviewCount === 0 || reviewsStepPx <= 0) return;
+
+    const intervalId = window.setInterval(() => {
+      if (pauseReviewsAutoSlideRef.current) return;
+      setReviewsTransition(true);
+      syncReviewsCardIndex(reviewsCardIndexRef.current + 1);
+    }, 7000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [reviewCount, reviewsStepPx]);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const syncGalleryPreviewLimit = () => {
+      setGalleryPreviewLimit(mq.matches ? 6 : 10);
+    };
+    syncGalleryPreviewLimit();
+    mq.addEventListener('change', syncGalleryPreviewLimit);
+    return () => mq.removeEventListener('change', syncGalleryPreviewLimit);
+  }, []);
 
   useEffect(() => {
     if (modalOpen === null && galleryModalOpen === null) {
@@ -258,25 +429,29 @@ function App() {
             <button className='bedroom-modal-close' onClick={closeModal}>
               <IoClose />
             </button>
-            <button 
-              className='bedroom-modal-nav bedroom-modal-prev'
-              onClick={() => prevPhoto(modalOpen, bedroomGalleries[modalOpen].photos.length)}
-            >
-              <IoChevronBack />
-            </button>
             <div className='bedroom-modal-image-container'>
+              <button
+                type='button'
+                className='bedroom-modal-nav bedroom-modal-prev'
+                onClick={() => prevPhoto(modalOpen, bedroomGalleries[modalOpen].photos.length)}
+                aria-label='Previous photo'
+              >
+                <IoChevronBack />
+              </button>
               <img 
                 src={bedroomGalleries[modalOpen].photos[modalPhotoIndex]} 
                 alt={bedroomGalleries[modalOpen].title}
                 className='bedroom-modal-image'
               />
+              <button
+                type='button'
+                className='bedroom-modal-nav bedroom-modal-next'
+                onClick={() => nextPhoto(modalOpen, bedroomGalleries[modalOpen].photos.length)}
+                aria-label='Next photo'
+              >
+                <IoChevronForward />
+              </button>
             </div>
-            <button 
-              className='bedroom-modal-nav bedroom-modal-next'
-              onClick={() => nextPhoto(modalOpen, bedroomGalleries[modalOpen].photos.length)}
-            >
-              <IoChevronForward />
-            </button>
             <div className='bedroom-modal-info'>
               <h3>{bedroomGalleries[modalOpen].title}</h3>
               <p>{bedroomGalleries[modalOpen].description}</p>
@@ -398,12 +573,79 @@ function App() {
         </div>
       </section>
 
+      <section className='reviews' id='reviews'>
+        <div className='reviews-container'>
+          <div className='reviews-heading'>
+            <h2>What Our Guests Say</h2>
+          </div>
+          <div className='reviews-slider-wrapper'>
+            <button
+              className='reviews-nav-btn'
+              aria-label='Show previous reviews'
+              onClick={() => slideReviews('left')}
+              onMouseEnter={() => {
+                pauseReviewsAutoSlideRef.current = true;
+              }}
+              onMouseLeave={() => {
+                pauseReviewsAutoSlideRef.current = false;
+              }}
+              type='button'
+            >
+              <IoChevronBack />
+            </button>
+            <div className='reviews-slider-viewport' aria-label='Guest reviews slider'>
+              <div
+                ref={reviewsInnerRef}
+                className='reviews-slider-track'
+                onTransitionEnd={handleReviewsTransitionEnd}
+                style={{
+                  transform: `translate3d(${-reviewsCardIndex * reviewsStepPx}px, 0, 0)`,
+                  transition: reviewsTransition
+                    ? 'transform 0.55s cubic-bezier(0.33, 1, 0.68, 1)'
+                    : 'none'
+                }}
+              >
+                {loopedReviews.map((review, index) => (
+                  <article className='review-card' key={`${review.name}-${index}`}>
+                    <div className='review-card-header'>
+                      <div className='review-avatar'>{review.name.charAt(0)}</div>
+                      <div className='review-author'>
+                        <div className='review-author-top-line'>
+                          <h4>{review.name}</h4>
+                          <p className='review-stars' aria-label='5 out of 5 stars'>★★★★★</p>
+                        </div>
+                        <p>{review.date} · {review.source}</p>
+                      </div>
+                    </div>
+                    <p className='review-text'>{review.text}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+            <button
+              className='reviews-nav-btn'
+              aria-label='Show next reviews'
+              onClick={() => slideReviews('right')}
+              onMouseEnter={() => {
+                pauseReviewsAutoSlideRef.current = true;
+              }}
+              onMouseLeave={() => {
+                pauseReviewsAutoSlideRef.current = false;
+              }}
+              type='button'
+            >
+              <IoChevronForward />
+            </button>
+          </div>
+        </div>
+      </section>
+
       <section className='gallery' id='gallery'>
         <div className='gallery-container'>
           <h2>Gallery</h2>
           <div className='gallery-grid'>
-            {(showAllGalleryPhotos ? galleryPhotos : galleryPhotos.slice(0, 10)).map((photo, index) => {
-              const actualIndex = showAllGalleryPhotos ? index : index;
+            {(showAllGalleryPhotos ? galleryPhotos : galleryPhotos.slice(0, galleryPreviewLimit)).map((photo, index) => {
+              const actualIndex = index;
               return (
                 <div
                   key={actualIndex}
@@ -418,7 +660,7 @@ function App() {
               );
             })}
           </div>
-          {!showAllGalleryPhotos && galleryPhotos.length > 10 && (
+          {!showAllGalleryPhotos && galleryPhotos.length > galleryPreviewLimit && (
             <div className='gallery-see-more-container'>
               <button className='gallery-see-more-btn' onClick={() => setShowAllGalleryPhotos(true)}>
                 See more
