@@ -158,7 +158,7 @@ function App() {
   const reviews = [
     {
       name: 'Daniel',
-      date: '3 weeks ago',
+      date: 'March 2026',
       source: 'Airbnb',
       text: "Great 5-night stay. The photos do not do this property justice. Everything feels brand new and finished to a very high standard, and the heated pool was perfect for relaxing even in cooler weather."
     },
