@@ -186,6 +186,20 @@
   color: #5a6c7d;
 }
 
+.mobile-airbnb-logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-airbnb-logo {
+  height: 1.8rem;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  display: block;
+}
+
 .mobile-reservation-btn {
   width: 100%;
   margin-top: 0.5rem;
@@ -221,12 +235,12 @@
   }
 
   .nav-right {
-    order: 2;
+    display: none;
   }
 
   .mobile-menu-toggle {
     display: block;
-    order: 3;
+    order: 2;
   }
 
   .mobile-menu {
@@ -267,12 +281,12 @@
   }
 
   .nav-right {
-    order: 2;
+    display: none;
   }
 
   .mobile-menu-toggle {
     display: block;
-    order: 3;
+    order: 2;
   }
 
   .mobile-menu {

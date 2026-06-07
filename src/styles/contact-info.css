@@ -224,12 +224,26 @@
 }
 
 /* WhatsApp icon styling */
-.details-info-third li:last-child a {
+.details-info-third li:nth-child(3) a {
   background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
 }
 
-.details-info-third li:last-child a:hover {
+.details-info-third li:nth-child(3) a:hover {
   background: linear-gradient(135deg, #128c7e 0%, #25d366 100%);
+}
+
+/* Airbnb icon styling */
+.details-info-third li:nth-child(4) a {
+  background: linear-gradient(135deg, #ff5a5f 0%, #e0484d 100%);
+}
+
+.details-info-third li:nth-child(4) a:hover {
+  transform: none;
+  background: linear-gradient(135deg, #e0484d 0%, #ff5a5f 100%);
+}
+
+.details-info-third li:nth-child(4) a svg {
+  font-size: 1.5rem;
 }
 
 /* Responsive Design */

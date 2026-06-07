@@ -75,6 +75,19 @@ export default function Header() {
             <a href="#reviews" onClick={handleNavClick}>Reviews</a>
             <a href="#gallery" onClick={handleNavClick}>Gallery</a>
             <a href="#contact-info" onClick={handleNavClick}>Contact</a>
+            <a
+              href="https://www.airbnb.com/rooms/1513066939468971782?photo_id=2398882751&source_impression_id=p3_1762810892_P3cEs9DH4rnDr8Dy&previous_page_section_name=1000"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-airbnb-logo-link"
+              onClick={handleNavClick}
+            >
+              <img 
+                src="/Airbnb_Logo_Test.svg" 
+                alt="Airbnb" 
+                className="mobile-airbnb-logo"
+              />
+            </a>
           </div>
         )}
       </div>

@@ -13,7 +13,7 @@ import { GoPeople } from "react-icons/go";
 import { FiPhone } from "react-icons/fi";
 import { LuClock2 } from "react-icons/lu";
 import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
-import { FaDumbbell, FaBook, FaBluetooth, FaSink, FaCoffee, FaPumpSoap, FaWind, FaFacebook, FaSoap, FaInstagram, FaBath, FaShower, FaTshirt, FaBed, FaWineGlass, FaUtensils, FaWifi, FaSwimmingPool, FaMountain, FaUmbrellaBeach, FaLock, FaCouch, FaWhatsapp } from 'react-icons/fa';
+import { FaDumbbell, FaBook, FaBluetooth, FaSink, FaCoffee, FaPumpSoap, FaWind, FaFacebook, FaSoap, FaInstagram, FaBath, FaShower, FaTshirt, FaBed, FaWineGlass, FaUtensils, FaWifi, FaSwimmingPool, FaMountain, FaUmbrellaBeach, FaLock, FaCouch, FaWhatsapp, FaAirbnb } from 'react-icons/fa';
 import { GiClothesline, GiHanger, GiWashingMachine, GiCookingPot, GiBarbecue, GiClothes } from 'react-icons/gi';
 import { MdOutlineKitchen , MdOutlineBlender, MdMicrowave, MdCurtains, MdOutlineBedroomParent, MdOutlineWaterDrop, MdOutdoorGrill, MdOutlineBalcony, MdKitchen, MdOutlineEmail} from 'react-icons/md';
 import { TbDeviceTv } from 'react-icons/tb';
@@ -759,6 +759,16 @@ function App() {
                     style={{ color: 'inherit', textDecoration: 'none' }}
                   >
                     <FaWhatsapp />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.airbnb.com/rooms/1513066939468971782?photo_id=2398882751&source_impression_id=p3_1762810892_P3cEs9DH4rnDr8Dy&previous_page_section_name=1000"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'inherit', textDecoration: 'none' }}
+                  >
+                    <FaAirbnb />
                   </a>
                 </li>
               </ul>
