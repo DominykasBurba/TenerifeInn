@@ -44,7 +44,7 @@
 .nav-center {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-30%);
   text-align: center;
 }
 
@@ -133,7 +133,7 @@
   opacity: 0.8;
 }
 
-/* Mobile Menu Toggle Button */
+
 .mobile-menu-toggle {
   display: none;
   background: none;
@@ -145,7 +145,7 @@
   z-index: 1001;
 }
 
-/* Mobile Menu */
+
 .mobile-menu {
   display: none;
   flex-direction: column;
@@ -191,8 +191,16 @@
   margin-top: 0.5rem;
 }
 
-/* Responsive Design */
-@media (max-width: 1250px) {
+#reviews {
+  scroll-margin-top: 80px;
+}
+#room-info {
+  scroll-margin-top: 120px;
+}
+#gallery {
+  scroll-margin-top: 80px;
+}
+@media (max-width: 1500px) {
   .top-nav {
     position: relative;
     flex-wrap: wrap;
