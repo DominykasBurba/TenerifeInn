@@ -225,3 +225,18 @@
   }
 }
 
+@media (max-width: 480px) {
+  .review-card {
+    width: 100cqi;
+    flex: 0 0 100cqi;
+  }
+}
+
+@supports not (width: 1cqi) {
+  @media (max-width: 480px) {
+    .review-card {
+      width: calc(100vw - 5.6rem);
+      flex: 0 0 calc(100vw - 5.6rem);
+    }
+  }
+}
